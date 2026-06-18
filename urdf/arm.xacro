@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="arm7_draw_ecam">
+
+  <!-- Anchor the robot to the world so the base doesn't drift under gravity. -->
+  <link name="world"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="1.82408447749194E-07 3.51716012578392E-06 0.00902025307310225"
+        rpy="0 0 0" />
+      <mass
+        value="0.600112766290217" />
+      <inertia
+        ixx="0.00142271929258348"
+        ixy="-1.84401120983798E-08"
+        ixz="2.64639323534756E-09"
+        iyy="0.0013839671431916"
+        iyz="-9.69141190424078E-08"
+        izz="0.00267251954660065" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.894117647058823 0.913725490196078 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Link_1">
+    <inertial>
+      <origin
+        xyz="-2.25326301170892E-05 -0.00342275072730493 0.0379899100805087"
+        rpy="0 0 0" />
+      <mass
+        value="0.178697895381802" />
+      <inertia
+        ixx="7.96290461236143E-05"
+        ixy="-2.55980621474788E-08"
+        ixz="2.94304187269095E-08"
+        iyy="9.47363858187909E-05"
+        iyz="-6.46778588079736E-06"
+        izz="7.81564431392561E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.06325"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Link_1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_2">
+    <inertial>
+      <origin
+        xyz="-2.80274159384641E-05 -0.116318399735538 -0.0228853770620961"
+        rpy="0 0 0" />
+      <mass
+        value="0.348159192515571" />
+      <inertia
+        ixx="0.000477027991002022"
+        ixy="2.15888231822849E-08"
+        ixz="1.91263112133737E-08"
+        iyy="0.000144550455995752"
+        iyz="-3.87745378235415E-06"
+        izz="0.000525800936425436" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_2"
+    type="revolute">
+    <origin
+      xyz="0 0.03075 0.0419"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="Link_1" />
+    <child
+      link="Link_2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_3">
+    <inertial>
+      <origin
+        xyz="-2.31977251451965E-05 0.00291620685841659 0.0400293534087893"
+        rpy="0 0 0" />
+      <mass
+        value="0.179709253045907" />
+      <inertia
+        ixx="8.11995141559795E-05"
+        ixy="3.02662559212822E-08"
+        ixz="1.22308541785918E-08"
+        iyy="9.67926159536252E-05"
+        iyz="6.76084403303808E-06"
+        izz="7.86977187926689E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_3"
+    type="revolute">
+    <origin
+      xyz="0 -0.1858 -0.0419"
+      rpy="1.5708 0 0" />
+    <parent
+      link="Link_2" />
+    <child
+      link="Link_3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_4">
+    <inertial>
+      <origin
+        xyz="2.13115813275933E-06 0.0597212181397539 -0.029199947092636"
+        rpy="0 0 0" />
+      <mass
+        value="0.211779849616449" />
+      <inertia
+        ixx="0.000116526342724511"
+        ixy="-4.30364662012504E-09"
+        ixz="-9.6691440600656E-08"
+        iyy="9.63481513847041E-05"
+        iyz="4.49677418706646E-06"
+        izz="0.000132714805957377" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_4"
+    type="revolute">
+    <origin
+      xyz="0 -0.03125 0.0442"
+      rpy="1.5708 0 0" />
+    <parent
+      link="Link_3" />
+    <child
+      link="Link_4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_5">
+    <inertial>
+      <origin
+        xyz="-0.0017723327104861 2.15124878880438E-06 0.0455126048772683"
+        rpy="0 0 0" />
+      <mass
+        value="0.15908104719164" />
+      <inertia
+        ixx="5.68632890424796E-05"
+        ixy="-7.82508226968812E-10"
+        ixz="-5.82924097998462E-07"
+        iyy="7.16893594239922E-05"
+        iyz="-2.69202150194192E-08"
+        izz="6.77401522669966E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_5"
+    type="revolute">
+    <origin
+      xyz="0 0.09375 -0.0424"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="Link_4" />
+    <child
+      link="Link_5" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_6">
+    <inertial>
+      <origin
+        xyz="-0.0010954 -0.00018174 -0.040472"
+        rpy="0 0 0" />
+      <mass
+        value="0.11675" />
+      <inertia
+        ixx="4.3059E-05"
+        ixy="-6.2343E-08"
+        ixz="6.1093E-08"
+        iyy="3.3174E-05"
+        iyz="1.3031E-07"
+        izz="3.334E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_6"
+    type="revolute">
+    <origin
+      xyz="0.0405 0 0.11837"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="Link_5" />
+    <child
+      link="Link_6" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.48869"
+      upper="0.2618"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="Link_7">
+    <inertial>
+      <origin
+        xyz="-0.00045228 0.013833 0.027141"
+        rpy="0 0 0" />
+      <mass
+        value="0.020351" />
+      <inertia
+        ixx="5.7603E-06"
+        ixy="1.4711E-07"
+        ixz="-6.4949E-09"
+        iyy="1.2412E-06"
+        iyz="1.951E-07"
+        izz="6.7452E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/Link_7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_7"
+    type="revolute">
+    <origin
+      xyz="-0.0335 0.00015003 -0.0405"
+      rpy="0 1.5708 0" />
+    <parent
+      link="Link_6" />
+    <child
+      link="Link_7" />
+    <axis
+      xyz="0 0.0044784 -0.99999" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="80"
+      velocity="3" />
+      <dynamics damping="0.5" friction="0.1"/>
+  </joint>
+  <link
+    name="ee">
+    <inertial>
+      <origin
+        xyz="-9.67727459322693E-05 -1.33416526664366E-05 -0.00297909515214412"
+        rpy="0 0 0" />
+      <mass
+        value="0.0119347262769104" />
+      <inertia
+        ixx="2.18322486775654E-06"
+        ixy="2.59604774286172E-10"
+        ixz="5.79678802798981E-08"
+        iyy="1.85971321951526E-06"
+        iyz="9.43233835191567E-09"
+        izz="3.96584433984964E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm7_draw_ecam/meshes/ee.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.15 0.15 0.17 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fix"
+    type="fixed">
+    <origin
+      xyz="-0.00162332444702011 0.0498231143785569 0.0337234649963674"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="Link_7" />
+    <child
+      link="ee" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <!-- Marker / pen tip: the physical marker sticks out 15 cm along the EE's
+       local +Z (the tool axis). FK/IK use tip_link:=pen_tip so the marker TIP
+       traces the path, not the EE flange. -->
+  <xacro:property name="pen_length" value="0.15" />
+  <joint name="pen_fix" type="fixed">
+    <origin xyz="0 0 ${pen_length}" rpy="0 0 0" />
+    <parent link="ee" />
+    <child link="pen_tip" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="pen_tip">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7" />
+    </inertial>
+    <visual>
+      <!-- shaft: cylinder along EE local Z, centred between flange and tip -->
+      <origin xyz="0 0 ${-pen_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.004" length="${pen_length}" />
+      </geometry>
+      <material name="pen_shaft">
+        <color rgba="1.0 0.9 0.0 1" />
+      </material>
+    </visual>
+    <visual>
+      <!-- tip marker -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.006" />
+      </geometry>
+      <material name="pen_point">
+        <color rgba="1.0 0.9 0.0 1" />
+      </material>
+    </visual>
+  </link>
+</robot>

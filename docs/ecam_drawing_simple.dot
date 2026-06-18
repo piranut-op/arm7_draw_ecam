@@ -1,0 +1,33 @@
+/* ECAM drawing pipeline — simplified
+ * Render:  dot -Tpng ecam_drawing_simple.dot -o ecam_drawing_simple.png
+ */
+digraph ecam_simple {
+  rankdir=LR;
+  fontname="Helvetica";
+  labelloc="t";
+  label="ECAM Drawing Pipeline — \"where should the pen be?\" → joint angles → motors → \"where did it go?\"";
+  fontsize=14;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.18,0.12"];
+  edge [fontname="Helvetica", fontsize=10];
+
+  EPATH  [label="ecam_path\nthe ARTIST 🎨\nknows the letter shapes", fillcolor="#e6f4ea"];
+  IK     [label="ik_arm_final\nthe TRANSLATOR 🧮\npoint → joint angles", fillcolor="#e6f4ea"];
+  BRIDGE [label="joint_commands_bridge\nthe GOVERNOR 🛡️\nsmooths / speed cap", fillcolor="#e8f0fe"];
+  MOTORS [label="pos_motor_sub\nthe MUSCLE 💪\nDamiao CAN-FD motors", fillcolor="#fce8e6", color="#c5221f", penwidth=2];
+  FK     [label="fk_arm_final\nthe EYES 👁️\njoints → real pen pose", fillcolor="#fef7e0"];
+
+  /* main forward chain */
+  EPATH  -> IK     [label="/ee_target  (+ /ecam_pen)\n\"pen should be HERE\""];
+  IK     -> BRIDGE [label="/joint_commands\n\"joints = these angles\""];
+  BRIDGE -> MOTORS [label="/joint_states", penwidth=2, color="#c5221f"];
+
+  /* the eyes read the motors */
+  MOTORS -> FK     [label="/joint_states", style=dashed];
+
+  /* feedback loop back to the top */
+  FK -> EPATH [label="/ee_pose  —  \"pen is ACTUALLY here\"  (feedback keeps it accurate)",
+               constraint=false, color="#188038", fontcolor="#188038", penwidth=1.6];
+  FK -> IK    [label="/ee_pose (warm-start)", constraint=false, color="#188038", style=dotted];
+
+  { rank=same; EPATH; FK; }
+}

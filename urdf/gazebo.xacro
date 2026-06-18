@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arm7_draw_ecam">
+
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+    </hardware>
+
+    <joint name="joint_1">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_2">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_3">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_4">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_5">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_6">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="joint_7">
+      <command_interface name="velocity">
+        <param name="min">-3.0</param>
+        <param name="max"> 3.0</param>
+      </command_interface>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+  <!-- ============================================================ -->
+  <!-- PBR materials for Ignition Gazebo (Ogre2 / RTX-class GPU).   -->
+  <!-- RViz ignores <gazebo> blocks; it uses the <material rgba>    -->
+  <!-- inside arm.xacro. These give the arm a glossy black metallic -->
+  <!-- finish in Ignition without affecting RViz.                   -->
+  <!-- ============================================================ -->
+
+  <xacro:macro name="shiny_black" params="link_name">
+    <gazebo reference="${link_name}">
+      <visual>
+        <material>
+          <ambient>0.02 0.02 0.02 1.0</ambient>
+          <diffuse>0.05 0.05 0.06 1.0</diffuse>
+          <specular>0.9 0.9 0.95 1.0</specular>
+          <pbr>
+            <metal>
+              <metalness>0.85</metalness>
+              <roughness>0.2</roughness>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="brushed_light" params="link_name">
+    <gazebo reference="${link_name}">
+      <visual>
+        <material>
+          <ambient>0.6 0.6 0.65 1.0</ambient>
+          <diffuse>0.8 0.82 0.9 1.0</diffuse>
+          <specular>0.5 0.5 0.55 1.0</specular>
+          <pbr>
+            <metal>
+              <metalness>0.7</metalness>
+              <roughness>0.45</roughness>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:brushed_light link_name="base_link"/>
+  <xacro:shiny_black   link_name="Link_1"/>
+  <xacro:shiny_black   link_name="Link_2"/>
+  <xacro:shiny_black   link_name="Link_3"/>
+  <xacro:shiny_black   link_name="Link_4"/>
+  <xacro:shiny_black   link_name="Link_5"/>
+  <xacro:shiny_black   link_name="Link_6"/>
+  <xacro:shiny_black   link_name="Link_7"/>
+  <xacro:shiny_black   link_name="ee"/>
+
+</robot>

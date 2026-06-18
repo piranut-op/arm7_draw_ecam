@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="arm7_draw_ecam">
+  <xacro:include filename="$(find arm7_draw_ecam)/urdf/arm.xacro" />
+  <xacro:include filename="$(find arm7_draw_ecam)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find arm7_draw_ecam)/urdf/ros2control.xacro" />
+
+</robot>

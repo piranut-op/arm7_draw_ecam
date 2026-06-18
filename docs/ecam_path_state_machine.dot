@@ -1,0 +1,68 @@
+/* ecam_path — 3-phase state machine (driven by the 50 Hz _tick timer)
+ * Render:  dot -Tpng ecam_path_state_machine.dot -o ecam_path_state_machine.png
+ */
+digraph ecam_state_machine {
+  rankdir=TB;
+  fontname="Helvetica";
+  labelloc="t";
+  label="ecam_path — 3-Phase State Machine (50 Hz _tick)";
+  fontsize=15;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=10, margin="0.2,0.12"];
+  edge [fontname="Helvetica", fontsize=9];
+
+  START [shape=circle, label="start", fillcolor="#d0d0d0", width=0.4, fixedsize=true];
+  DONE  [shape=doublecircle, label="done", fillcolor="#cfe8d4", width=0.5, fixedsize=true];
+
+  /* ---------- PHASE 1 ---------- */
+  subgraph cluster_p1 {
+    label="PHASE 1 — Prepose & Anchor   (while not self._anchored)";
+    style="rounded,filled"; fillcolor="#eef3fd"; color="#3367d6"; fontsize=12;
+    WAIT_FB  [label="wait for first /ee_pose\n(feedback live?)", fillcolor="#e8f0fe"];
+    WAIT_SUB [label="wait for controller subscriber\nget_subscription_count() >= 1 ?\n(avoid discovery-race drop)", fillcolor="#e8f0fe"];
+    SEND     [label="_send_prepose()\npublish WRITING_POSTURE\n[0, 30deg, 0, -60deg, 0,0,0]", fillcolor="#e8f0fe"];
+    SETTLE   [label="settle ~5 s\n(arm reaches posture)", fillcolor="#e8f0fe"];
+    ANCHOR   [label="_anchor_and_build()\ncapture /ee_pose -> anchor (hx,hy,hz, dq)\n_build(): letters->strokes->densify\n-> _samples / _quats / _pen", fillcolor="#e8f0fe"];
+  }
+
+  /* ---------- PHASE 2 ---------- */
+  subgraph cluster_p2 {
+    label="PHASE 2 — Draw   (idx < len(_samples))";
+    style="rounded,filled"; fillcolor="#eef7f0"; color="#188038"; fontsize=12;
+    PUB    [label="_publish(_samples[idx], _quats[idx], _pen[idx])\n-> /ee_target (PoseStamped) + /ecam_pen (Bool)\nidx += 1", fillcolor="#e6f4ea"];
+    NEXT   [label="more samples?\nidx < len(_samples)", shape=diamond, fillcolor="#cdebd6"];
+  }
+
+  /* ---------- PHASE 3 ---------- */
+  subgraph cluster_p3 {
+    label="PHASE 3 — Return Home   (return_home=true)";
+    style="rounded,filled"; fillcolor="#fef9ec"; color="#e37400"; fontsize=12;
+    BUILDR [label="_build_return()\ninterpolate joints q_now -> 0\nFK each step -> pose list\n(needs /joint_states + URDF)", fillcolor="#fef7e0"];
+    PUBR   [label="stream return poses as /ee_target\n(joint-space move via IK,\nnot a Cartesian line)\nridx += 1", fillcolor="#fef7e0"];
+    RNEXT  [label="ridx < len(_return)?", shape=diamond, fillcolor="#fdeec3"];
+  }
+
+  /* ---------- transitions ---------- */
+  START -> WAIT_FB;
+  WAIT_FB  -> WAIT_FB  [label="no /ee_pose yet"];
+  WAIT_FB  -> WAIT_SUB [label="pose received"];
+  WAIT_SUB -> WAIT_SUB [label="no sub (<10s)"];
+  WAIT_SUB -> ANCHOR   [label="no sub after 10s\n(_fail_to_anchor:\ndraw where we are)", style=dashed, color="#c5221f", fontcolor="#c5221f"];
+  WAIT_SUB -> SEND     [label="subscriber ready"];
+  SEND -> SETTLE;
+  SETTLE -> SETTLE [label="t < settle+1s"];
+  SETTLE -> ANCHOR [label="settled"];
+
+  ANCHOR -> NEXT;
+  NEXT -> PUB   [label="yes"];
+  PUB  -> NEXT  [label="next tick"];
+  NEXT -> BUILDR [label="no (drawing done)"];
+
+  BUILDR -> RNEXT [label="built"];
+  BUILDR -> BUILDR [label="waiting for\njoint_states/URDF"];
+  RNEXT -> PUBR [label="yes"];
+  PUBR  -> RNEXT [label="next tick"];
+  RNEXT -> DONE [label="no (home reached)\n_done=True"];
+
+  /* loop option (Phase 2 -> restart) */
+  NEXT -> ANCHOR [label="loop=true:\nidx=0, restart", style=dotted, color="#5f6368", constraint=false];
+}
